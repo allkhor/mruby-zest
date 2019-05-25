@@ -196,15 +196,17 @@ module Draw
             end
             vg.stroke_width 1.0
 
-            sel_color    = Theme::VisualSelect
-            bright       = Theme::VisualBright
             (0...n).each do |i|
                 xx = bb.x + bb.w*dat[i].x;
                 yy = bb.y + bb.h/2*(1-dat[i].y);
                 scale = 3
-                vg.stroke_color sel_color if(selected == i)
-                vg.stroke_color bright    if(selected != i)
-                vg.fill_color   Theme::EnvelopePoint
+                if(selected == i)
+                    vg.stroke_color Theme::EnvelopePointSelect
+                    vg.fill_color   Theme::EnvelopePointSelect
+                else
+                    vg.stroke_color Theme::VisualBright
+                    vg.fill_color   Theme::EnvelopePoint
+                end
                 Draw::WaveForm::env_marker(vg, xx, yy, scale)
             end
         end
@@ -773,6 +775,7 @@ module Theme
 
     SustainPoint        = color("005f8a")
     EnvelopePoint       = color("232c36")
+    EnvelopePointSelect = color("ffffff")
 
     #Keyboard Widget
     KeyWhiteGrad1       = color("B0B7C0")
